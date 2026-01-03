@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jonas Fisker — Jonas / AI Studio</title>
+  <meta name="description" content="Strategisk AI-rådgiver for SMV'er. Robust system-promptning, AI-implementering og datasikkerhed & governance." />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b1220;
+      --muted:#5b6577;
+      --card:#f6f7f9;
+      --border:#e7e9ee;
+      --shadow: 0 10px 30px rgba(11,18,32,.08);
+      --radius: 18px;
+      --max: 980px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{color:inherit}
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 18px 64px;
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0 18px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand strong{font-size:14px; letter-spacing:.2px}
+    .brand span{font-size:12px; color:var(--muted)}
+    .pill{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--border);
+      padding:8px 10px;
+      border-radius:999px;
+      background:#fff;
+    }
+
+    .hero{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    h1{
+      margin:0 0 8px;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing:-.6px;
+      line-height:1.15;
+    }
+    .sub{
+      margin:0 0 16px;
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+    .ctaRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--text);
+      background: var(--text);
+      color: #fff;
+      text-decoration:none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btnSecondary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .note{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns: 1fr}
+    }
+    .card{
+      border:1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    h2{
+      margin: 26px 0 10px;
+      font-size: 18px;
+      letter-spacing: -.2px;
+    }
+    h3{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: -.2px;
+    }
+    .muted{color:var(--muted)}
+    .bullets{
+      margin:10px 0 0;
+      padding-left: 18px;
+      color: var(--text);
+    }
+    .bullets li{margin:8px 0}
+    .cases{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .cases{grid-template-columns: 1fr}
+    }
+    .caseCard{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 10px 22px rgba(11,18,32,.06);
+    }
+    .tag{
+      display:inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      background: #f3f4f7;
+      border:1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .kv{
+      margin-top: 10px;
+      display:grid;
+      gap:10px;
+    }
+    .kv b{display:block; font-size:12px; color:var(--muted); margin-bottom:2px; letter-spacing:.2px}
+    .kv p{margin:0; font-size:14px}
+    footer{
+      margin-top: 22px;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .small{font-size:12px; color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <strong>Jonas / AI Studio</strong>
+        <span>AI Consulting</span>
+      </div>
+      <div class="pill">Strategisk AI-rådgiver</div>
+    </div>
+
+    <section class="hero">
+      <h1>Jonas Fisker</h1>
+      <p class="sub">
+        Jeg hjælper små og mellemstore virksomheder med at omsætte AI fra idé til forretningskritisk drift.
+      </p>
+
+      <div class="ctaRow">
+        <a class="btn" href="mailto:molbergconsulting@gmail.com?subject=Uforpligtende%20snak%20om%20AI">
+          Kontakt mig
+        </a>
+        <a class="btnSecondary" href="#cases">Se cases</a>
+        <span class="note">Skriv for en uforpligtende snak.</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Om</h3>
+          <p class="muted" style="margin:0;">
+            Jonas Fisker hjælper små og mellemstore virksomheder med at omsætte AI fra idé til forretningskritisk drift.
+            Jeg designer robuste system-prompts og implementerer sikre AI-løsninger, der forankres i virksomhedens egne data.
+            Resultatet er AI, der fungerer som en veltrænet medarbejder – ikke et eksperiment – og som skaber målbar effektivitet,
+            beslutningskraft og konkurrencefordel.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Fokusområder</h3>
+          <ul class="bullets">
+            <li><b>Strategisk system-promptning</b> – som en virksomhedsstrategi i miniature: klare mål, faste spilleregler og konsistent output.</li>
+            <li><b>Praktisk AI-implementering i SMV’er</b> – AI integreret i arbejdsgange, ikke sideløbende værktøjer.</li>
+            <li><b>Datasikkerhed & governance</b> – data behandlet som kapital, med kontrol, sporbarhed og ansvarlig arkitektur.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <h2 id="cases">Udvalgte cases</h2>
+    <section class="cases">
+      <article class="caseCard">
+        <div class="tag">Aktieforening · AI Investeringsassistent</div>
+        <h3>Fra mavefornemmelse til strukturerede investeringsbeslutninger</h3>
+
+        <div class="kv">
+          <div>
+            <b>Problem</b>
+            <p>Aktieforeningen var afhængig af manuelle analyser, spredte noter og personafhængig viden – som en bestyrelse uden fælles regnskabsmodel.</p>
+          </div>
+          <div>
+            <b>Løsning</b>
+            <p>En skræddersyet AI-investeringsassistent, der analyserer selskaber ud fra faste kriterier, samler research, logger beslutninger og fungerer som et fælles “investerings-CFO”.</p>
+          </div>
+          <div>
+            <b>Effekt</b>
+            <p>Hurtigere og mere konsistente beslutninger, fælles vidensbank og markant reduceret analysearbejde – uden at gå på kompromis med kvaliteten.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="caseCard">
+        <div class="tag">Psykologpraksis · AI Selv-test</div>
+        <h3>Skalerbar faglighed uden at miste menneskelighed</h3>
+
+        <div class="kv">
+          <div>
+            <b>Problem</b>
+            <p>Psykologen brugte værdifuld tid på indledende afklaringer, gentagelser og manuelle screeninger – som at holde første session gratis hver gang.</p>
+          </div>
+          <div>
+            <b>Løsning</b>
+            <p>En AI-baseret psykologisk selv-test, der guider klienten gennem refleksive spørgsmål, strukturerer svar og giver psykologen et kvalificeret udgangspunkt før første samtale.</p>
+          </div>
+          <div>
+            <b>Effekt</b>
+            <p>Bedre forberedte klienter, højere kvalitet i sessionerne og mere tid til det, der skaber reel terapeutisk værdi.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="caseCard">
+        <div class="tag">Bygherrerådgivning · GPT Mødeassistent</div>
+        <h3>Fra fragmenteret projektstyring til digital rygrad</h3>
+
+        <div class="kv">
+          <div>
+            <b>Problem</b>
+            <p>Møder, referater, sager og beslutninger levede i separate systemer og hoveder – som et byggeprojekt uden samlet tidsplan.</p>
+          </div>
+          <div>
+            <b>Løsning</b>
+            <p>En GPT-baseret mødeassistent og sagsoperatør, der opsummerer møder, fordeler handlinger, opdaterer sager og sikrer konsistens på tværs af projekter.</p>
+          </div>
+          <div>
+            <b>Effekt</b>
+            <p>Mindre administrativt spild, færre fejl og en organisation, hvor viden flyder som et velsmurt byggeri – fra fundament til aflevering.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer><!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jonas Fisker — Jonas / AI Studio</title>
+  <meta name="description" content="Strategisk AI-rådgiver for SMV'er. Robust system-promptning, AI-implementering og datasikkerhed & governance." />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#0b1220;
+      --muted:#5b6577;
+      --card:#f6f7f9;
+      --border:#e7e9ee;
+      --shadow: 0 10px 30px rgba(11,18,32,.08);
+      --radius: 18px;
+      --max: 980px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{color:inherit}
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:28px 18px 64px;
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 0 18px;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand strong{font-size:14px; letter-spacing:.2px}
+    .brand span{font-size:12px; color:var(--muted)}
+    .pill{
+      font-size:12px;
+      color:var(--muted);
+      border:1px solid var(--border);
+      padding:8px 10px;
+      border-radius:999px;
+      background:#fff;
+    }
+
+    .hero{
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    h1{
+      margin:0 0 8px;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing:-.6px;
+      line-height:1.15;
+    }
+    .sub{
+      margin:0 0 16px;
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+    .ctaRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top: 14px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--text);
+      background: var(--text);
+      color: #fff;
+      text-decoration:none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btnSecondary{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .note{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns: 1fr}
+    }
+    .card{
+      border:1px solid var(--border);
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    h2{
+      margin: 26px 0 10px;
+      font-size: 18px;
+      letter-spacing: -.2px;
+    }
+    h3{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: -.2px;
+    }
+    .muted{color:var(--muted)}
+    .bullets{
+      margin:10px 0 0;
+      padding-left: 18px;
+      color: var(--text);
+    }
+    .bullets li{margin:8px 0}
+    .cases{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .cases{grid-template-columns: 1fr}
+    }
+    .caseCard{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 10px 22px rgba(11,18,32,.06);
+    }
+    .tag{
+      display:inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      background: #f3f4f7;
+      border:1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    .kv{
+      margin-top: 10px;
+      display:grid;
+      gap:10px;
+    }
+    .kv b{display:block; font-size:12px; color:var(--muted); margin-bottom:2px; letter-spacing:.2px}
+    .kv p{margin:0; font-size:14px}
+    footer{
+      margin-top: 22px;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .small{font-size:12px; color:var(--muted)}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <strong>Jonas / AI Studio</strong>
+        <span>AI Consulting</span>
+      </div>
+      <div class="pill">Strategisk AI-rådgiver</div>
+    </div>
+
+    <section class="hero">
+      <h1>Jonas Fisker</h1>
+      <p class="sub">
+        Jeg hjælper små og mellemstore virksomheder med at omsætte AI fra idé til forretningskritisk drift.
+      </p>
+
+      <div class="ctaRow">
+        <a class="btn" href="mailto:molbergconsulting@gmail.com?subject=Uforpligtende%20snak%20om%20AI">
+          Kontakt mig
+        </a>
+        <a class="btnSecondary" href="#cases">Se cases</a>
+        <span class="note">Skriv for en uforpligtende snak.</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Om</h3>
+          <p class="muted" style="margin:0;">
+            Jonas Fisker hjælper små og mellemstore virksomheder med at omsætte AI fra idé til forretningskritisk drift.
+            Jeg designer robuste system-prompts og implementerer sikre AI-løsninger, der forankres i virksomhedens egne data.
+            Resultatet er AI, der fungerer som en veltrænet medarbejder – ikke et eksperiment – og som skaber målbar effektivitet,
+            beslutningskraft og konkurrencefordel.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Fokusområder</h3>
+          <ul class="bullets">
+            <li><b>Strategisk system-promptning</b> – som en virksomhedsstrategi i miniature: klare mål, faste spilleregler og konsistent output.</li>
+            <li><b>Praktisk AI-implementering i SMV’er</b> – AI integreret i arbejdsgange, ikke sideløbende værktøjer.</li>
+            <li><b>Datasikkerhed & governance</b> – data behandlet som kapital, med kontrol, sporbarhed og ansvarlig arkitektur.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <h2 id="cases">Udvalgte cases</h2>
+    <section class="cases">
+      <article class="caseCard">
+        <div class="tag">Aktieforening · AI Investeringsassistent</div>
+        <h3>Fra mavefornemmelse til strukturerede investeringsbeslutninger</h3>
+
+        <div class="kv">
+          <div>
+            <b>Problem</b>
+            <p>Aktieforeningen var afhængig af manuelle analyser, spredte noter og personafhængig viden – som en bestyrelse uden fælles regnskabsmodel.</p>
+          </div>
+          <div>
+            <b>Løsning</b>
+            <p>En skræddersyet AI-investeringsassistent, der analyserer selskaber ud fra faste kriterier, samler research, logger beslutninger og fungerer som et fælles “investerings-CFO”.</p>
+          </div>
+          <div>
+            <b>Effekt</b>
+            <p>Hurtigere og mere konsistente beslutninger, fælles vidensbank og markant reduceret analysearbejde – uden at gå på kompromis med kvaliteten.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="caseCard">
+        <div class="tag">Psykologpraksis · AI Selv-test</div>
+        <h3>Skalerbar faglighed uden at miste menneskelighed</h3>
+
+        <div class="kv">
+          <div>
+            <b>Problem</b>
+            <p>Psykologen brugte værdifuld tid på indledende afklaringer, gentagelser og manuelle screeninger – som at holde første session gratis hver gang.</p>
+          </div>
+          <div>
+            <b>Løsning</b>
+            <p>En AI-baseret psykologisk selv-test, der guider klienten gennem refleksive spørgsmål, strukturerer svar og giver psykologen et kvalificeret udgangspunkt før første samtale.</p>
+          </div>
+          <div>
+            <b>Effekt</b>
+            <p>Bedre forberedte klienter, højere kvalitet i sessionerne og mere tid til det, der skaber reel terapeutisk værdi.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="caseCard">
+        <div class="tag">Bygherrerådgivning · GPT Mødeassistent</div>
+        <h3>Fra fragmenteret projektstyring til digital rygrad</h3>
+
+        <div class="kv">
+          <div>
+            <b>Problem</b>
+            <p>Møder, referater, sager og beslutninger levede i separate systemer og hoveder – som et byggeprojekt uden samlet tidsplan.</p>
+          </div>
+          <div>
+            <b>Løsning</b>
+            <p>En GPT-baseret mødeassistent og sagsoperatør, der opsummerer møder, fordeler handlinger, opdaterer sager og sikrer konsistens på tværs af projekter.</p>
+          </div>
+          <div>
+            <b>Effekt</b>
+            <p>Mindre administrativt spild, færre fejl og en organisation, hvor viden flyder som et velsmurt byggeri – fra fundament til aflevering.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <div>
+        <div style="font-weight:700;">Kontakt</div>
+        <div class="small">Skriv for en uforpligtende snak.</div>
+        <div class="small">
+          <a href="mailto:molbergconsulting@gmail.com?subject=Uforpligtende%20snak%20om%20AI">molbergconsulting@gmail.com</a>
+        </div>
+      </div>
+      <div class="small">© <span id="year"></span> Jonas Fisker — Jonas / AI Studio</div>
+    </footer>
+  </div>
+
+  <script>
+    // Sætter årstal automatisk
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+      <div>
+        <div style="font-weight:700;">Kontakt</div>
+        <div class="small">Skriv for en uforpligtende snak.</div>
+        <div class="small">
+          <a href="mailto:molbergconsulting@gmail.com?subject=Uforpligtende%20snak%20om%20AI">molbergconsulting@gmail.com</a>
+        </div>
+      </div>
+      <div class="small">© <span id="year"></span> Jonas Fisker — Jonas / AI Studio</div>
+    </footer>
+  </div>
+
+  <script>
+    // Sætter årstal automatisk
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
